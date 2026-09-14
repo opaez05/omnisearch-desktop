@@ -1,0 +1,5 @@
+name: "git_flow"
+description: "Automatiza el flujo de git add, commit y push cuando el usuario termina su jornada"
+triggers:
+  - "termine de trabajar por hoy"
+  - "finalizar jornada"

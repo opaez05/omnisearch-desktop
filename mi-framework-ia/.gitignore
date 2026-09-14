@@ -1,0 +1,26 @@
+# Archivos de entorno y secretos
+.env
+.env.local
+
+# Python / Pycache / Entornos virtuales
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+
+# Datos persistentes locales de prueba
+data/
+test-data/
+*.db
+*.sqlite
+
+# Rust / Tauri (Artefactos de compilación)
+target/
+src-tauri/target/
+
+# Node / JS
+node_modules/
+dist/
