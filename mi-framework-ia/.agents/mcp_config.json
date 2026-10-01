@@ -1,0 +1,46 @@
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "C:\\Users\\oscar\\Documents\\UNIVERSIDAD\\8.OCTAVO SEMESTRE\\electiva_IA\\mi-framework-ia"
+            ]
+        },
+        "git": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-git",
+                "--repository",
+                "C:\\Users\\oscar\\Documents\\UNIVERSIDAD\\8.OCTAVO SEMESTRE\\electiva_IA\\mi-framework-ia"
+            ]
+        },
+        "sequential-thinking": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ]
+        },
+        "context7": {
+            "url": "https://mcp.context7.com/mcp"
+        },
+        "mem0": {
+            "url": "https://mcp.mem0.ai/mcp",
+            "headers": {
+                "Authorization": "Token m0-PFMKMYKodwrO5f9PdildOyETedoY0PbXoBbhek0H"
+            }
+        },
+        "MongoDB": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "mongodb-mcp-server"
+            ],
+            "env": {
+                "MDB_MCP_CONNECTION_STRING": "mongodb+srv://username:password@cluster.mongodb.net/myDatabase"
+            }
+        }
+    }
+}
