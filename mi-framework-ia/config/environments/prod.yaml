@@ -1,2 +1,21 @@
-llm_provider: claude
+# Configuración de Entorno de Producción
+
+# Infraestructura Local LLM
+llm_provider: ollama
+ollama_host: "127.0.0.1"
+ollama_port: 11434
+
+# Transcripción de Audio
+whisper_backend: whisper.cpp
+
+# Bases de Datos
+# NOTA: Pendiente definir si se usará MongoDB o Redis.
+nosql_host: "127.0.0.1"
+nosql_port: 27017
+
+# Configuración de Watcher (Throttling)
+watcher:
+  debounce_ms: 2000 # Un poco más relajado en prod
+  max_concurrent_tasks: 2
+
 log_level: info

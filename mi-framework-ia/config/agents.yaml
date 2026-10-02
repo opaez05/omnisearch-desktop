@@ -1,3 +1,3 @@
 active_agents:
-  - research_agent
-  - coding_agent
+  - ingest_agent
+  - search_agent

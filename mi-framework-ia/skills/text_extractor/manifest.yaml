@@ -1,0 +1,21 @@
+name: text_extractor
+version: 1.0.0
+type: skill
+description: Extrae texto plano a partir de archivos PDF, DOCX, TXT o CSV para su posterior vectorización.
+author: framework
+permissions:
+  - file_system_read
+input_schema:
+  type: object
+  properties:
+    file_path:
+      type: string
+      description: Ruta absoluta del archivo
+  required:
+    - file_path
+output_schema:
+  type: object
+  properties:
+    text:
+      type: string
+      description: Contenido extraído en texto plano

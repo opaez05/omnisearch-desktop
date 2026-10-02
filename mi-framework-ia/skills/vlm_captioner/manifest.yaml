@@ -1,0 +1,25 @@
+name: vlm_captioner
+version: 1.0.0
+type: skill
+description: Utiliza un modelo de visión por computadora local vía Ollama para generar una descripción textual detallada de una imagen.
+author: framework
+permissions:
+  - file_system_read
+  - ollama_api_access
+input_schema:
+  type: object
+  properties:
+    image_path:
+      type: string
+      description: Ruta absoluta de la imagen (.jpg, .png, .webp)
+    prompt:
+      type: string
+      default: "Describe en detalle el contenido de esta imagen, texto impreso y firmas."
+  required:
+    - image_path
+output_schema:
+  type: object
+  properties:
+    caption:
+      type: string
+      description: Descripción textual generada por el VLM

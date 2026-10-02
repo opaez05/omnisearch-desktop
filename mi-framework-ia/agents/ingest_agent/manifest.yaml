@@ -1,0 +1,33 @@
+name: ingest_agent
+version: 1.0.0
+type: agent
+description: Agente encargado de recibir un nuevo archivo detectado en disco, determinar su tipo MIME y orquestar la ingesta y vectorización.
+author: framework
+skills_required:
+  - text_extractor
+  - vlm_captioner
+  - whisper_transcriber
+  - embedding_generator
+permissions:
+  - file_system_read
+  - lancedb_write
+  - ollama_api_access
+triggers:
+  - "nuevo archivo detectado"
+  - "reindexar directorio"
+input_schema:
+  type: object
+  properties:
+    file_path:
+      type: string
+      description: Ruta absoluta del archivo a procesar
+  required:
+    - file_path
+output_schema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum: ["SUCCESS", "SKIPPED", "FAILED"]
+    indexed_id:
+      type: string

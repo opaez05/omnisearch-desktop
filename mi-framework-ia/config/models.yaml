@@ -1,0 +1,22 @@
+# Definición de modelos locales a utilizar
+
+embeddings:
+  name: "bge-small-en-v1.5"
+  type: "vector"
+  dimension: 384
+  provider: "ollama"
+
+vision:
+  name: "moondream2"
+  type: "vlm"
+  provider: "ollama"
+
+speech_to_text:
+  name: "whisper-tiny"
+  type: "stt"
+  provider: "whisper.cpp"
+
+reasoning:
+  name: "llama3.2:3b"
+  type: "slm"
+  provider: "ollama"

@@ -1,0 +1,33 @@
+name: search_agent
+version: 1.0.0
+type: agent
+description: Agente encargado de procesar consultas en lenguaje natural, extraer conceptos, vectorizar la búsqueda y re-rankear los resultados.
+author: framework
+skills_required:
+  - embedding_generator
+permissions:
+  - lancedb_read
+  - ollama_api_access
+triggers:
+  - "buscar archivo"
+  - "consulta semántica"
+input_schema:
+  type: object
+  properties:
+    query:
+      type: string
+      description: Consulta del usuario
+  required:
+    - query
+output_schema:
+  type: object
+  properties:
+    results:
+      type: array
+      items:
+        type: object
+        properties:
+          file_path:
+            type: string
+          score:
+            type: number

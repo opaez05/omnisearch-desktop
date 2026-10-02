@@ -1,0 +1,23 @@
+name: embedding_generator
+version: 1.0.0
+type: skill
+description: Genera un vector denso (embedding) a partir de una cadena de texto, utilizando Ollama (ej. bge-small).
+author: framework
+permissions:
+  - ollama_api_access
+input_schema:
+  type: object
+  properties:
+    text:
+      type: string
+      description: Texto a vectorizar
+  required:
+    - text
+output_schema:
+  type: object
+  properties:
+    embedding:
+      type: array
+      items:
+        type: number
+      description: Vector generado

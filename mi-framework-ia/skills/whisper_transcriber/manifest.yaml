@@ -1,0 +1,21 @@
+name: whisper_transcriber
+version: 1.0.0
+type: skill
+description: Transcribe archivos de audio a texto utilizando el modelo Whisper local.
+author: framework
+permissions:
+  - file_system_read
+input_schema:
+  type: object
+  properties:
+    audio_path:
+      type: string
+      description: Ruta absoluta del archivo de audio (.wav, .mp3, .ogg)
+  required:
+    - audio_path
+output_schema:
+  type: object
+  properties:
+    transcript:
+      type: string
+      description: Transcripción textual del audio
