@@ -159,3 +159,21 @@ Usar el **MCP de GitHub** (`github-mcp-server`) para hacer push de todos los cam
 - `AGENTS.md` sirve a la vez como instrucciones del agente Y como bitácora de sesiones.
 - La carpeta `docs/sessions/` guardará bitácoras detalladas por sesión si el volumen lo justifica.
 - El agente debe leer SIEMPRE este archivo al inicio de cada sesión.
+
+---
+
+## Sesión 2 — 2026-10-04
+
+**Objetivo de la sesión:** Diseño visual del prototipo de la pantalla principal para el rol 'Usuario Final' usando Stitch MCP y la técnica `/grill-me`.
+
+**Cambios realizados:**
+- Se analizaron los requerimientos funcionales (`RF-01` a `RF-12`), historias de usuario (`HU-01` a `HU-12`) y casos de uso en `docs/product/`.
+- Se ejecutó la entrevista interactiva `/grill-me` alineando las decisiones de diseño para el explorador semántico.
+- Se configuró el proyecto Stitch `OmniSearch Desktop - Local Semantic Explorer` y su `Design System` oscuro glassmorphic.
+- Se generó la pantalla visual en Stitch y se descargó el render en alta resolución en `docs/prototipos/pantalla_principal_usuario.png`.
+- Se guardó la URL del prototipo interactivo en `docs/prototipos/url.md`.
+- Se documentaron los nuevos prototipos y la bitácora de sesión en `AGENTS.md` y `docs/README.md`.
+
+**Decisiones tomadas:**
+- La pantalla principal del Usuario Final adopta un patrón de Lanzador Flotante Modal tipo Raycast/Spotlight (`Cmd/Alt + Espacio`) con layout split-pane de 2 columnas (Resultados Semánticos e Inspector Vectorial) para priorizar el acceso instantáneo y la velocidad de trabajo sin interrumpir el flujo del sistema operativo.
+
