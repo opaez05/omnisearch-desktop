@@ -15,6 +15,7 @@ Documentos que definen **qué** se construye y **para quién**.
 | [requerimientos_funcionales.md](product/requerimientos_funcionales.md) | RF-01 a RF-12: Comportamiento esperado del sistema |
 | [requerimientos_no_funcionales.md](product/requerimientos_no_funcionales.md) | Restricciones técnicas, seguridad, rendimiento y métricas |
 | [casos_de_uso.md](product/casos_de_uso.md) | Escenarios de interacción del usuario con el sistema |
+| [historias_de_usuario.md](product/historias_de_usuario.md) | HU-01 a HU-12: Historias de usuario en formato BDD/Gherkin y matriz de trazabilidad |
 
 ---
 
@@ -29,6 +30,18 @@ Documentos que definen **cómo** se construye.
 | [skills_spec.md](architecture/skills_spec.md) | Especificación del sistema de Skills del framework |
 | [diagrama_arquitectura.png](architecture/diagrama_arquitectura.png) | Diagrama visual de la arquitectura del sistema |
 | [diagrama_componentes.png](architecture/diagrama_componentes.png) | Diagrama de componentes internos |
+| [diagrama_clases.png](architecture/diagrama_clases.png) | Diagrama de clases del sistema (Arquitectura Hexagonal, puertos, adaptadores y UI) |
+
+---
+
+## 🎨 prototipos/ — Prototipos Visuales de UI
+
+Bocetos visuales y capturas en alta resolución generadas con Stitch MCP.
+
+| Documento / Imagen | Descripción |
+|--------------------|-------------|
+| [pantalla_principal_usuario.png](prototipos/pantalla_principal_usuario.png) | Prototipo visual en alta resolución (2560x2048) del Lanzador Flotante Modal (Spotlight/Raycast) para el Usuario Final |
+| [url.md](prototipos/url.md) | Enlace directo al proyecto interactivo y pantalla en Stitch MCP |
 
 ---
 
@@ -39,4 +52,5 @@ Ver también la sección `Bitácora de Sesiones` en [`AGENTS.md`](../AGENTS.md).
 
 ---
 
-> *Última actualización: 2026-10-01 | Mantenido automáticamente por el agente de IA al cierre de cada sesión.*
+> *Última actualización: 2026-10-04 | Mantenido automáticamente por el agente de IA al cierre de cada sesión.*
+
