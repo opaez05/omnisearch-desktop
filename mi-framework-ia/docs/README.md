@@ -27,6 +27,9 @@ Documentos que definen **cómo** se construye.
 | [architecture.md](architecture/architecture.md) | Arquitectura Hexagonal, patrones de diseño, convenciones de Rust y TypeScript |
 | [manifest_schema.md](architecture/manifest_schema.md) | Esquema de manifiestos del motor de Agentes y Skills |
 | [skills_spec.md](architecture/skills_spec.md) | Especificación del sistema de Skills del framework |
+| [diagrama_er_nosql.png](architecture/diagrama_er_nosql.png) | Diagrama ER NoSQL en PNG con MongoDB, Redis y LanceDB |
+| [diagrama_er_nosql.md](architecture/diagrama_er_nosql.md) | Fuente Mermaid y descripción del modelo ER NoSQL |
+| [render_er_nosql.ps1](architecture/render_er_nosql.ps1) | Script local para regenerar el PNG en Windows |
 | [diagrama_arquitectura.png](architecture/diagrama_arquitectura.png) | Diagrama visual de la arquitectura del sistema |
 | [diagrama_componentes.png](architecture/diagrama_componentes.png) | Diagrama de componentes internos |
 
