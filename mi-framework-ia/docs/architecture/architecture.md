@@ -21,8 +21,10 @@ Este documento define la arquitectura técnica formal para el desarrollo del **E
 ### 2.2 Framework e Infraestructura
 * **Tauri v2 (Rust + Webview):** Binarios ultraligeros (~15 MB) y consumo de memoria base de ~40-60 MB de RAM.
 * **React 18 / Vite + Tailwind CSS + Zustand:** Capa visual reactiva estilo Spotlight/Raycast.
-* **LanceDB (Embebido):** Base de datos vectorial columnar basada en Apache Arrow para búsqueda semántica.
-* **SQLite (`rusqlite` / `sqlx`):** Base de datos relacional embebida (`index.db`) para hashes SHA-256 y control de la cola de trabajo (`PENDING`, `DONE`, `FAILED`).
+* **LanceDB (Embebido - NoSQL Vectorial y Documental):** Base de datos columnar in-process basada en Apache Arrow para persistencia de embeddings y metadatos multimodales.
+* **SQLite (`rusqlite` con JSON1):** Motor documental y transaccional embebido (`index.db`) para deduplicación ultra-rápida por hash SHA-256 y seguimiento de estados.
+* **Tokio Channels + Moka Cache (In-Memory):** Sustituto nativo en memoria de Redis para gestión de colas de ingesta y caché de consultas de alto rendimiento (< 5 ms).
+> 📖 *Para una comparativa técnica detallada (MongoDB + Redis vs. Stack Embebido) y esquemas completos de datos, consultar [database_architecture.md](database_architecture.md).*
 * **Ollama + Whisper.cpp:** Servicio local de inferencia (`bge-small`, `moondream2`, `llama3.2`, `whisper`).
 
 ---

@@ -22,8 +22,9 @@ Y el sistema encuentra los archivos relevantes **sin que ningún dato salga de l
 |------|------------|
 | Desktop / Backend | Tauri v2, Rust (`tokio`, `notify`, `rusqlite`) |
 | Frontend | React 18, TypeScript, Vite, Tailwind CSS, Zustand |
-| Base de datos vectorial | LanceDB (embebido, Apache Arrow) |
-| Base de datos relacional | SQLite (`index.db`) — hashes SHA-256, cola de trabajo |
+| Base de datos vectorial / NoSQL | LanceDB (embebido, Apache Arrow, documentos y vectores) |
+| Base de datos documental / metadatos | SQLite (`index.db` con JSON1) — hashes SHA-256, deduplicación y estado |
+| Colas y Caché (Sustituto Redis) | Tokio MPSC + Semáforos (colas) y Moka Cache (in-memory LRU/TTL) |
 | Embeddings de texto | `bge-small-en-v1.5` / `nomic-embed-text` |
 | Visión (VLM) | `Moondream2` / `Florence-2-base` |
 | Audio (STT) | `Whisper.cpp` (base/small) |
@@ -176,4 +177,32 @@ Usar el **MCP de GitHub** (`github-mcp-server`) para hacer push de todos los cam
 
 **Decisiones tomadas:**
 - La pantalla principal del Usuario Final adopta un patrón de Lanzador Flotante Modal tipo Raycast/Spotlight (`Cmd/Alt + Espacio`) con layout split-pane de 2 columnas (Resultados Semánticos e Inspector Vectorial) para priorizar el acceso instantáneo y la velocidad de trabajo sin interrumpir el flujo del sistema operativo.
+
+---
+
+## Sesión 3 — 2026-10-25
+
+**Objetivo de la sesión:** Definición técnica de la arquitectura de Base de Datos y Persistencia NoSQL para OmniSearch Desktop tras entrevista `/grill-me`.
+
+**Cambios realizados:**
+- Se analizó la propuesta de MongoDB + Redis frente a las restricciones del sistema (`RNF-01` 100% local y `RNF-04` <60 MB RAM en reposo).
+- Se ejecutó la entrevista `/grill-me` determinando la adopción de una arquitectura **NoSQL Embebida Dual (LanceDB + SQLite-JSON1)** y primitivas en memoria nativas en Rust (`Tokio MPSC` para colas y `Moka` para caché).
+- Se creó el documento formal [`docs/architecture/database_architecture.md`](docs/architecture/database_architecture.md) con análisis comparativo detallado, esquemas Arrow/BSON, diagramas de secuencia Mermaid y estimación de dimensionamiento en disco.
+- Se actualizaron los índices en [`docs/README.md`](docs/README.md) y [`docs/architecture/architecture.md`](docs/architecture/architecture.md).
+
+**Decisiones tomadas:**
+- Descartar MongoDB y Redis como dependencias obligatorias de escritorio para evitar imponer al usuario la instalación de daemons o Docker y prevenir consumos de >1 GB de RAM.
+- Utilizar LanceDB como base de datos NoSQL columnar y vectorial in-process y SQLite con extensión JSON1 para deduplicación ultra-rápida (SHA-256) y metadatos transaccionales.
+
+---
+
+## Sesión 4 — 2026-10-26
+
+**Objetivo de la sesión:** Documentar la especificación fundacional y prompt inicial que dio origen a la arquitectura y visión de OmniSearch Desktop.
+
+**Cambios realizados:**
+- Se creó el archivo [`docs/product/prompt_inicial.md`](docs/product/prompt_inicial.md) registrando el prompt semilla y el desglose de capacidades derivadas hacia el PRD, requerimientos e historias de usuario.
+- Se actualizó el índice de producto en [`docs/README.md`](docs/README.md).
+
+
 

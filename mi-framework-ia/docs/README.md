@@ -11,6 +11,7 @@ Documentos que definen **qué** se construye y **para quién**.
 
 | Documento | Descripción |
 |-----------|-------------|
+| [prompt_inicial.md](product/prompt_inicial.md) | Especificación y prompt semilla fundacional del proyecto |
 | [PRD.md](product/PRD.md) | Product Requirements Document — Visión, alcance, stack y roadmap por fases |
 | [requerimientos_funcionales.md](product/requerimientos_funcionales.md) | RF-01 a RF-12: Comportamiento esperado del sistema |
 | [requerimientos_no_funcionales.md](product/requerimientos_no_funcionales.md) | Restricciones técnicas, seguridad, rendimiento y métricas |
@@ -26,6 +27,7 @@ Documentos que definen **cómo** se construye.
 | Documento | Descripción |
 |-----------|-------------|
 | [architecture.md](architecture/architecture.md) | Arquitectura Hexagonal, patrones de diseño, convenciones de Rust y TypeScript |
+| [database_architecture.md](architecture/database_architecture.md) | Arquitectura de Base de Datos NoSQL: comparativa (MongoDB+Redis vs. Stack Embebido), esquemas y flujos |
 | [manifest_schema.md](architecture/manifest_schema.md) | Esquema de manifiestos del motor de Agentes y Skills |
 | [skills_spec.md](architecture/skills_spec.md) | Especificación del sistema de Skills del framework |
 | [diagrama_er_nosql.png](architecture/diagrama_er_nosql.png) | Diagrama ER NoSQL en PNG con MongoDB, Redis y LanceDB |

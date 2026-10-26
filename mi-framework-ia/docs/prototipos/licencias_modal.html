@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniSearch Desktop - Activación de Licencia y Máquina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#00D4FF',
+              cyanDark: '#0099cc',
+              emerald: '#10B981',
+              amber: '#F59E0B',
+              purple: '#A855F7',
+              darkBg: '#080c14',
+              surface: '#0d131f',
+              surfaceCard: '#111928',
+              surfaceElevated: '#172236',
+              border: '#1e293b',
+              borderGlow: '#00D4FF33',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 25px -5px rgba(0, 212, 255, 0.25)',
+            'glow-cyan-sm': '0 0 12px -2px rgba(0, 212, 255, 0.35)',
+            'modal-depth': '0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(0, 212, 255, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 20%, #0d1b2e 0%, #060911 100%);
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(13, 19, 31, 0.6);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 255, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-200 flex items-center justify-center p-4 antialiased overflow-hidden select-none">
+
+  <!-- Desktop App Background Context Simulation (Dimmed Desktop Explorer Preview) -->
+  <div class="fixed inset-0 pointer-events-none opacity-20 filter blur-md">
+    <div class="absolute top-4 left-6 flex items-center space-x-3 text-brand-cyan">
+      <span class="material-symbols-outlined text-2xl">neurology</span>
+      <span class="font-mono text-xs tracking-wider">OMNISEARCH_CORE_LOCAL_DAEMON // PID:4981 // ACTIVE</span>
+    </div>
+    <div class="absolute inset-x-12 top-20 bottom-12 border border-slate-800 rounded-xl bg-slate-900/40 grid grid-cols-12 gap-4 p-6">
+      <div class="col-span-3 bg-slate-950/60 rounded-lg p-4"></div>
+      <div class="col-span-9 bg-slate-950/40 rounded-lg p-4"></div>
+    </div>
+  </div>
+
+  <!-- MODAL WINDOW (Fixed ratio 1280x850 desktop dialog) -->
+  <div class="relative w-full max-w-[1240px] h-[850px] bg-brand-surface/95 backdrop-blur-2xl border border-slate-800/90 rounded-2xl shadow-modal-depth flex flex-col overflow-hidden text-sm z-20">
+    
+    <!-- Top System Window Bar & Breadcrumbs / Status Header -->
+    <header class="flex-none px-6 py-4 border-b border-slate-800/80 bg-brand-darkBg/80 flex items-center justify-between">
+      <!-- Left side: Traffic lights + Title + Breadcrumb + Status -->
+      <div class="flex items-center space-x-4">
+        <!-- Mac-style window controls (native desktop feel) -->
+        <div class="flex items-center space-x-2 mr-2">
+          <span class="w-3 h-3 rounded-full bg-red-500/80 hover:opacity-100 cursor-pointer transition-opacity"></span>
+          <span class="w-3 h-3 rounded-full bg-amber-500/80 hover:opacity-100 cursor-pointer transition-opacity"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500/80 hover:opacity-100 cursor-pointer transition-opacity"></span>
+        </div>
+
+        <div class="h-4 w-[1px] bg-slate-800"></div>
+
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-mono text-slate-400">Settings &gt;</span>
+            <span class="text-xs font-mono text-brand-cyan font-medium">Licensing &amp; Machine Activation</span>
+          </div>
+          <h1 class="text-base font-semibold text-white tracking-tight flex items-center gap-2.5">
+            Licencia y Activación de Terminal
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
+              Community Edition (Activa)
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Right side: Quick Action Import + Close Window -->
+      <div class="flex items-center space-x-3">
+        <button class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm group">
+          <span class="material-symbols-outlined text-[17px] text-brand-cyan group-hover:scale-110 transition-transform">folder_open</span>
+          <span>Importar Licencia Offline (<code class="text-brand-cyan font-mono text-[10px]">.lic</code>)</span>
+        </button>
+        <button class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors" title="Cerrar ventana">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Body Content -->
+    <main class="flex-1 overflow-y-auto custom-scroll p-6 space-y-6">
+
+      <!-- HERO AREA: Overview Card (Hardware ID & Cryptographic Engine State) -->
+      <section class="relative rounded-xl border border-slate-800 bg-gradient-to-r from-brand-surfaceCard via-brand-surfaceElevated to-brand-surfaceCard p-5 overflow-hidden">
+        <!-- Subtle cyan accent top border beam -->
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent"></div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          
+          <!-- Column 1: Hardware ID / Fingerprint -->
+          <div class="space-y-1.5">
+            <div class="flex items-center space-x-2 text-xs font-mono text-slate-400">
+              <span class="material-symbols-outlined text-sm text-brand-cyan">fingerprint</span>
+              <span class="uppercase tracking-wider">Machine Fingerprint / Hardware ID</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <div class="flex-1 bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-1.5 font-mono text-xs text-brand-cyan font-medium flex items-center justify-between tracking-wide">
+                <span>HWID-8F92-41AC-9904-E20B</span>
+                <span class="text-[10px] text-slate-500 uppercase">SHA-256 bound</span>
+              </div>
+              <button class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-cyan/50 text-slate-300 hover:text-brand-cyan transition-colors" title="Copiar ID de Máquina">
+                <span class="material-symbols-outlined text-[16px]">content_copy</span>
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-500">Derivado del UUID de CPU, placa base y disco NVMe. No contiene datos personales.</p>
+          </div>
+
+          <!-- Column 2: Plan Status & Local Engine Verification -->
+          <div class="space-y-1.5 border-l border-slate-800/80 pl-6">
+            <div class="flex items-center space-x-2 text-xs font-mono text-slate-400">
+              <span class="material-symbols-outlined text-sm text-emerald-400">verified_user</span>
+              <span class="uppercase tracking-wider">Verificación Criptográfica Local</span>
+            </div>
+            <div class="flex items-baseline space-x-2">
+              <span class="text-lg font-bold text-white tracking-tight">Edición Gratuita</span>
+              <span class="text-xs text-slate-400 font-mono">v2.4.0 (Instalado 12 Oct 2024)</span>
+            </div>
+            <div class="inline-flex items-center text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+              <span class="material-symbols-outlined text-xs mr-1">network_check</span>
+              100% Local Verification — Zero Telemetry &amp; No Cloud Pings
+            </div>
+          </div>
+
+          <!-- Column 3: Workstation Seats & Node Slot Indicator -->
+          <div class="space-y-1.5 border-l border-slate-800/80 pl-6">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+              <span class="flex items-center space-x-1.5">
+                <span class="material-symbols-outlined text-sm text-brand-purple">devices</span>
+                <span>PUESTOS / WORKSTATION SEATS</span>
+              </span>
+              <span class="text-brand-cyan font-bold">1 de 3 asignados</span>
+            </div>
+            <!-- Progress Bar of Seats -->
+            <div class="w-full bg-slate-950/80 h-2 rounded-full overflow-hidden border border-slate-800 flex">
+              <div class="bg-brand-cyan h-full w-1/3 rounded-full"></div>
+              <div class="bg-slate-800 h-full w-2/3"></div>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-slate-400 font-mono">
+              <span class="text-emerald-400 flex items-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block mr-1"></span>
+                Este equipo: MacBook Pro (M2 Max)
+              </span>
+              <button class="text-brand-cyan hover:underline text-[11px]">Ver dispositivos &rarr;</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PRIMARY TWO-COLUMN WORKSPACE AREA -->
+      <div class="grid grid-cols-12 gap-6">
+
+        <!-- LEFT COLUMN: Activation Form & Offline Air-Gapped Verification (7 Cols) -->
+        <div class="col-span-12 lg:col-span-7 space-y-5">
+          
+          <div class="rounded-xl border border-slate-800 bg-brand-surfaceCard p-6 space-y-5 shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-800/70 pb-3">
+              <div>
+                <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+                  <span class="material-symbols-outlined text-brand-cyan text-lg">vpn_key</span>
+                  Activar Clave de Licencia Comercial o Pro
+                </h2>
+                <p class="text-xs text-slate-400 mt-0.5">Ingresa tu número de serie de 16 caracteres o arrastra tu token firmado.</p>
+              </div>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 border border-slate-700">Offline Engine</span>
+            </div>
+
+            <!-- Segmented Serial Key Input (XXXX-XXXX-XXXX-XXXX) -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-mono font-medium text-slate-300 flex items-center gap-1.5">
+                  <span>CLAVE DE SERIE (SERIAL KEY)</span>
+                  <span class="text-slate-500 font-sans text-[11px]">(4 bloques alfanuméricos)</span>
+                </label>
+                <button class="text-[11px] font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px]">content_paste</span>
+                  Pegar desde portapapeles
+                </button>
+              </div>
+
+              <!-- 4 Grouped blocks -->
+              <div class="grid grid-cols-4 gap-3 font-mono">
+                <div class="relative">
+                  <input type="text" maxlength="4" value="OMNI" placeholder="XXXX" class="w-full text-center bg-slate-950 border border-brand-cyan/60 rounded-lg py-2.5 text-sm text-brand-cyan font-bold tracking-widest focus:outline-none focus:ring-1 focus:ring-brand-cyan focus:border-brand-cyan shadow-sm uppercase placeholder-slate-700">
+                  <span class="absolute -right-2 top-3 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div class="relative">
+                  <input type="text" maxlength="4" value="89FA" placeholder="XXXX" class="w-full text-center bg-slate-950 border border-brand-cyan/60 rounded-lg py-2.5 text-sm text-brand-cyan font-bold tracking-widest focus:outline-none focus:ring-1 focus:ring-brand-cyan focus:border-brand-cyan shadow-sm uppercase placeholder-slate-700">
+                  <span class="absolute -right-2 top-3 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div class="relative">
+                  <input type="text" maxlength="4" value="442B" placeholder="XXXX" class="w-full text-center bg-slate-950 border border-brand-cyan/60 rounded-lg py-2.5 text-sm text-brand-cyan font-bold tracking-widest focus:outline-none focus:ring-1 focus:ring-brand-cyan focus:border-brand-cyan shadow-sm uppercase placeholder-slate-700">
+                  <span class="absolute -right-2 top-3 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div>
+                  <input type="text" maxlength="4" placeholder="XXXX" class="w-full text-center bg-slate-950 border border-slate-700 rounded-lg py-2.5 text-sm text-white font-bold tracking-widest focus:outline-none focus:ring-1 focus:ring-brand-cyan focus:border-brand-cyan shadow-sm uppercase placeholder-slate-700">
+                </div>
+              </div>
+            </div>
+
+            <!-- Alternative: Drag and Drop Certificate Target for Air-Gapped Enclaves -->
+            <div class="relative border-2 border-dashed border-slate-700/80 hover:border-brand-cyan/60 bg-slate-950/40 hover:bg-slate-900/30 rounded-xl p-4 text-center transition-all cursor-pointer group">
+              <div class="flex flex-col items-center justify-center space-y-1.5">
+                <div class="w-9 h-9 rounded-full bg-slate-800/80 group-hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 group-hover:text-brand-cyan transition-colors">
+                  <span class="material-symbols-outlined text-lg">file_upload</span>
+                </div>
+                <div class="text-xs text-slate-300">
+                  <span class="font-medium text-white group-hover:text-brand-cyan transition-colors">Selecciona o arrastra tu archivo de licencia (.lic / .sig)</span>
+                </div>
+                <p class="text-[11px] text-slate-500 font-mono">Para entornos air-gapped o subredes sin acceso WAN</p>
+              </div>
+            </div>
+
+            <!-- Actions Row: Primary Activate + Troubleshoot -->
+            <div class="flex items-center justify-between pt-2">
+              <a href="#" class="text-xs text-slate-400 hover:text-brand-cyan flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-sm">help_outline</span>
+                <span>¿Problemas activando sin conexión?</span>
+              </a>
+
+              <div class="flex items-center space-x-3">
+                <button class="px-3 py-2 rounded-lg border border-slate-700 text-xs font-medium text-slate-300 hover:bg-slate-800 transition-colors">
+                  Limpiar
+                </button>
+                <button class="px-5 py-2 rounded-lg bg-brand-cyan hover:bg-brand-cyanDark text-slate-950 font-semibold text-xs transition-all shadow-glow-cyan flex items-center space-x-2">
+                  <span class="material-symbols-outlined text-[17px]">lock_open</span>
+                  <span>Validar y Activar Licencia</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Privacy Guarantee Callout Box -->
+            <div class="rounded-lg bg-slate-950/70 border border-slate-800 p-3.5 flex items-start space-x-3">
+              <span class="material-symbols-outlined text-brand-cyan text-base mt-0.5">shield</span>
+              <div class="text-xs space-y-1">
+                <span class="font-medium text-slate-200 block">Compromiso Criptográfico de Cero Rastreo (Air-Gapped Trust)</span>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  OmniSearch valida las licencias utilizando criptografía asimétrica Ed25519 embebida en el daemon local de Rust. No se envían firmas, IPs ni metadatos a servidores externos durante o después del proceso.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Secondary Quick Diagnostic / Seat Binding Card -->
+          <div class="rounded-xl border border-slate-800 bg-brand-surfaceCard p-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-lg bg-brand-purple/10 border border-brand-purple/20 flex items-center justify-center text-brand-purple">
+                <span class="material-symbols-outlined text-sm">link</span>
+              </div>
+              <div>
+                <div class="text-xs font-medium text-white">Vinculación de Hardware Activa</div>
+                <div class="text-[11px] text-slate-400">Slot 1: <span class="font-mono text-slate-300">Apple Silicon Neural Engine (Enclave Local)</span></div>
+              </div>
+            </div>
+            <button class="text-xs font-mono text-red-400 hover:text-red-300 hover:underline flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">link_off</span>
+              Desvincular este equipo
+            </button>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Plan Tiers & Capability Matrix (5 Cols) -->
+        <div class="col-span-12 lg:col-span-5 space-y-4">
+          
+          <div class="flex items-center justify-between">
+            <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-brand-cyan text-sm">view_column</span>
+              Comparativa de Ediciones
+            </h2>
+            <a href="#" class="text-[11px] font-mono text-brand-cyan hover:underline flex items-center gap-1">
+              <span>Gestionar en web</span>
+              <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+            </a>
+          </div>
+
+          <!-- Plan Card 1: Community Edition (Current) -->
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4.5 space-y-3 relative opacity-85 hover:opacity-100 transition-opacity">
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h3 class="text-sm font-semibold text-white">Community Edition</h3>
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">Actual</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Uso personal y de código abierto sin coste.</p>
+              </div>
+              <div class="text-right">
+                <div class="text-base font-bold text-white font-mono">$0</div>
+                <div class="text-[10px] text-slate-500 uppercase font-mono">De por vida</div>
+              </div>
+            </div>
+
+            <!-- Feature Checkpoints -->
+            <ul class="space-y-2 text-xs text-slate-300">
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-emerald-400">check_circle</span>
+                <span>Indexación de 1 carpeta local raíz</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-emerald-400">check_circle</span>
+                <span>Embeddings de texto estándar (<code class="text-slate-400 font-mono text-[11px]">BGE-Small</code>)</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-emerald-400">check_circle</span>
+                <span>Búsqueda semántica básica y filtros de fecha</span>
+              </li>
+              <li class="flex items-center space-x-2 text-slate-500">
+                <span class="material-symbols-outlined text-xs text-slate-600">cancel</span>
+                <span class="line-through">Sin análisis multimodal VLM (Moondream2)</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Plan Card 2: Pro Studio Lifetime (Featured / Recommended) -->
+          <div class="rounded-xl border-2 border-brand-cyan/80 bg-gradient-to-b from-brand-surfaceElevated to-brand-surfaceCard p-4.5 space-y-3 relative shadow-glow-cyan-sm">
+            
+            <!-- Ribbon Badge -->
+            <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-brand-cyan text-slate-950 font-bold text-[10px] font-mono uppercase tracking-wider flex items-center shadow-md">
+              <span class="material-symbols-outlined text-[11px] mr-1">star</span>
+              Recomendado / Licencia Vitalicia
+            </div>
+
+            <div class="flex items-start justify-between pt-1">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h3 class="text-sm font-semibold text-white">Pro Studio Lifetime</h3>
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">Offline Pro</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Para profesionales legales, investigadores y devs.</p>
+              </div>
+              <div class="text-right">
+                <div class="text-base font-bold text-brand-cyan font-mono">$149</div>
+                <div class="text-[10px] text-slate-400 uppercase font-mono">Pago Único</div>
+              </div>
+            </div>
+
+            <!-- Feature Checkpoints -->
+            <ul class="space-y-2 text-xs text-slate-200">
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-brand-cyan">verified</span>
+                <span><strong class="text-white">Carpetas ilimitadas</strong> y discos externos/NAS</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-brand-cyan">verified</span>
+                <span><strong class="text-white">Extracción Multimodal VLM:</strong> Sellos, firmas y gráficos</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-brand-cyan">verified</span>
+                <span>Transcripción de audio local con <strong class="text-white">Whisper STT</strong></span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-brand-cyan">verified</span>
+                <span>Exportación de Chunks RAG a Markdown / Obsidian</span>
+              </li>
+              <li class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-xs text-brand-cyan">verified</span>
+                <span>3 Puestos simultáneos (macOS, Linux, Windows)</span>
+              </li>
+            </ul>
+
+            <div class="pt-1">
+              <button class="w-full py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-brand-cyan/40 text-brand-cyan text-xs font-semibold font-mono flex items-center justify-center space-x-1.5 transition-all">
+                <span>Comprar Licencia Pro en omnisearch.ai</span>
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- FOOTER BAR: Legal & Machine Diagnostics Actions -->
+    <footer class="flex-none px-6 py-3 border-t border-slate-800/80 bg-brand-darkBg/90 flex flex-wrap items-center justify-between text-xs text-slate-400">
+      
+      <!-- Left: Privacy & EULA statement -->
+      <div class="flex items-center space-x-2">
+        <span class="material-symbols-outlined text-emerald-400 text-sm">lock</span>
+        <span>OmniSearch EULA &amp; Privacy Policy: <strong>Ningún byte abandona tu ordenador.</strong></span>
+      </div>
+
+      <!-- Right: Secondary recovery & utility links -->
+      <div class="flex items-center space-x-4 font-mono text-[11px]">
+        <button class="hover:text-slate-200 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[13px]">file_download</span>
+          Exportar Diagnóstico de Máquina
+        </button>
+        <span class="text-slate-700">|</span>
+        <button class="hover:text-slate-200 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[13px]">contact_support</span>
+          Soporte Empresarial
+        </button>
+        <span class="text-slate-700">|</span>
+        <button class="text-slate-400 hover:text-white transition-colors">
+          Registro de Cambios v2.4
+        </button>
+      </div>
+
+    </footer>
+
+  </div>
+
+</body>
+</html>

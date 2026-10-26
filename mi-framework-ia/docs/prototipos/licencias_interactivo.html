@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>OmniSearch Desktop - Prototipo Interactivo de Licencias y Activación</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#00D4FF',
+            'background-light': '#f5f8f8',
+            'background-dark': '#0f2023',
+            brand: {
+              cyan: '#00D4FF',
+              cyanDark: '#0099cc',
+              emerald: '#10B981',
+              amber: '#F59E0B',
+              purple: '#A855F7',
+              darkBg: '#080c14',
+              surface: '#0d131f',
+              surfaceCard: '#111928',
+              surfaceElevated: '#172236',
+              border: '#1e293b',
+              borderGlow: '#00D4FF33',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+            display: ['Public Sans', 'sans-serif']
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 25px -4px rgba(0, 212, 255, 0.35)',
+            'glow-cyan-sm': '0 0 14px -2px rgba(0, 212, 255, 0.4)',
+            'glow-emerald-sm': '0 0 14px -2px rgba(16, 185, 129, 0.4)',
+            'modal-depth': '0 30px 70px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 212, 255, 0.22)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 15%, #0c1a2e 0%, #060911 100%);
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(13, 19, 31, 0.6);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(30, 41, 59, 0.85);
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 255, 0.5);
+    }
+    @keyframes pulseSuccess {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #00D4FF); }
+    }
+    .animate-success-pop {
+      animation: pulseSuccess 0.6s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-200 flex items-center justify-center p-3 antialiased select-none">
+
+  <!-- Desktop App Background Context Simulation -->
+  <div class="fixed inset-0 pointer-events-none opacity-20 filter blur-md">
+    <div class="absolute top-4 left-6 flex items-center space-x-3 text-brand-cyan">
+      <span class="material-symbols-outlined text-2xl">neurology</span>
+      <span class="font-mono text-xs tracking-wider">OMNISEARCH_CORE_LOCAL_DAEMON // PID:4981 // CRYPTO_ENCLAVE_ACTIVE</span>
+    </div>
+    <div class="absolute inset-x-12 top-20 bottom-12 border border-slate-800 rounded-xl bg-slate-950/60 grid grid-cols-12 gap-4 p-6">
+      <div class="col-span-3 bg-slate-900/50 rounded-lg p-4"></div>
+      <div class="col-span-9 bg-slate-900/40 rounded-lg p-4"></div>
+    </div>
+  </div>
+
+  <!-- FLOATING INTERACTIVE TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed top-6 right-8 z-50 transform translate-y-[-120%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-slate-950/95 border border-brand-cyan/80 text-white px-4 py-3 rounded-xl shadow-glow-cyan">
+    <span id="toastIcon" class="material-symbols-outlined text-brand-cyan text-xl">check_circle</span>
+    <div class="text-xs">
+      <div id="toastTitle" class="font-bold text-brand-cyan font-mono">Notificación</div>
+      <div id="toastMessage" class="text-slate-300">Mensaje de prueba</div>
+    </div>
+  </div>
+
+  <!-- FIXED RATIO MODAL WINDOW (1280x880 Desktop Security Cyber-Glass Dialog) -->
+  <div class="relative w-full max-w-[1280px] h-[880px] bg-brand-surface/95 backdrop-blur-2xl border border-cyan-500/20 rounded-2xl shadow-modal-depth flex flex-col overflow-hidden text-sm z-20">
+    
+    <!-- TOP HEADER & STEPPER FLOW -->
+    <header class="flex-none px-6 py-3.5 border-b border-slate-800/90 bg-brand-darkBg/95 flex items-center justify-between">
+      <!-- Left side: Window traffic lights + Dialog Title + Breadcrumb Flow -->
+      <div class="flex items-center space-x-4">
+        <!-- macOS Native Window Controls -->
+        <div class="flex items-center space-x-2 mr-1">
+          <button id="btnTrafficClose" class="w-3 h-3 rounded-full bg-red-500/90 hover:opacity-100 cursor-pointer transition-opacity" title="Cerrar modal"></button>
+          <span class="w-3 h-3 rounded-full bg-amber-500/90 hover:opacity-100 cursor-pointer transition-opacity" title="Minimizar"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500/90 hover:opacity-100 cursor-pointer transition-opacity" title="Expandir"></span>
+        </div>
+        <div class="h-5 w-[1px] bg-slate-800"></div>
+        <div>
+          <!-- Stepper breadcrumb flow -->
+          <div class="flex items-center space-x-2 text-[11px] font-mono">
+            <span id="step1Indicator" class="text-slate-400">1. Key Entry</span>
+            <span class="text-slate-600">&gt;</span>
+            <span id="step2Indicator" class="text-brand-cyan font-semibold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-ping"></span>
+              2. Local Signature Validation (Active)
+            </span>
+            <span class="text-slate-600">&gt;</span>
+            <span id="step3Indicator" class="text-slate-500">3. Engine Unlocking</span>
+          </div>
+          <h1 class="text-base font-semibold text-white tracking-tight flex items-center gap-2 mt-0.5 font-display">
+            License Activation &amp; Engine Capabilities
+            <span id="licenseBadgeTop" class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+              <span class="material-symbols-outlined text-[13px] mr-1 text-cyan-400">lock_open</span>
+              <span id="licenseBadgeTopText">Pro Studio Unlock Enclave</span>
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Right side: Offline/Air-Gapped Mode Switch + Close Button -->
+      <div class="flex items-center space-x-4">
+        <!-- Interactive Air-gapped toggle -->
+        <button id="toggleAirGapped" class="flex items-center space-x-2.5 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-400 transition-colors">
+          <div class="relative flex items-center justify-center">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="absolute w-4 h-4 rounded-full bg-emerald-400/30 animate-ping"></span>
+          </div>
+          <span id="airGappedText" class="text-xs font-mono font-medium text-emerald-400 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px]">security</span>
+            Air-Gapped Mode: ON
+          </span>
+          <div id="airGappedPill" class="w-8 h-4 bg-emerald-600 rounded-full p-0.5 flex items-center justify-end shadow-inner transition-all">
+            <div class="w-3 h-3 rounded-full bg-white shadow-sm"></div>
+          </div>
+        </button>
+
+        <button id="btnHeaderClose" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Cerrar ventana">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCROLLABLE BODY (Interactive 2-column + Workstation drawer) -->
+    <main class="flex-1 overflow-y-auto custom-scroll p-6 space-y-5">
+      
+      <!-- TWO-COLUMN SECTION -->
+      <div class="grid grid-cols-12 gap-5 items-start">
+        
+        <!-- LEFT COLUMN: Interactive License Key & Certificate Flow (~55%) -->
+        <div class="col-span-12 lg:col-span-7 space-y-4">
+          <div class="rounded-xl border border-slate-800 bg-brand-surfaceCard/90 p-5 space-y-4 shadow-sm relative overflow-hidden">
+            <!-- Subtle accent top border -->
+            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent"></div>
+            
+            <!-- Header and Tabs -->
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-brand-cyan text-lg">vpn_key</span>
+                  <h2 class="text-sm font-semibold text-white">Clave Criptográfica de Licencia</h2>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Ingresa tu token firmado o vincula tu archivo serial offline.</p>
+              </div>
+
+              <!-- Segmented View Tabs -->
+              <div class="flex items-center bg-slate-950 p-1 rounded-lg border border-slate-800 text-[11px] font-mono">
+                <button id="tabSerial" class="px-3 py-1 rounded bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 font-medium shadow-sm flex items-center gap-1 transition-all">
+                  <span class="material-symbols-outlined text-[13px]">pin</span>
+                  Serial Key
+                </button>
+                <button id="tabOfflineFile" class="px-2.5 py-1 text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px]">description</span>
+                  Import Offline (.lic / .sig)
+                </button>
+              </div>
+            </div>
+
+            <!-- VIEW 1: Segmented Serial Key Inputs (Active state) -->
+            <div id="viewSerialForm" class="space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-mono font-medium text-slate-300 flex items-center gap-1.5">
+                  <span>SERIAL PRODUCT KEY</span>
+                  <span id="keyFormatStatus" class="text-emerald-400 text-[11px] flex items-center font-sans font-medium gap-0.5">
+                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                    Formato Válido (Pro Tier)
+                  </span>
+                </label>
+                <button id="btnPasteDemo" class="text-[11px] font-mono text-brand-cyan hover:text-cyan-300 flex items-center gap-1 hover:underline cursor-pointer">
+                  <span class="material-symbols-outlined text-[13px]">content_paste</span>
+                  Pegar Clave Demo (⌘V)
+                </button>
+              </div>
+
+              <!-- 4 Input Blocks Pre-filled / editable -->
+              <div class="grid grid-cols-4 gap-2.5 font-mono">
+                <div class="relative">
+                  <input id="keyBlock1" class="w-full text-center bg-slate-950/90 border border-brand-cyan/70 text-brand-cyan font-bold py-2 rounded-lg text-sm tracking-widest shadow-glow-cyan-sm focus:outline-none focus:ring-1 focus:ring-brand-cyan uppercase" maxlength="6" type="text" value="OS-PRO"/>
+                  <span class="absolute -right-2 top-2.5 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div class="relative">
+                  <input id="keyBlock2" class="w-full text-center bg-slate-950/90 border border-brand-cyan/70 text-brand-cyan font-bold py-2 rounded-lg text-sm tracking-widest shadow-glow-cyan-sm focus:outline-none focus:ring-1 focus:ring-brand-cyan uppercase" maxlength="4" type="text" value="8F2A"/>
+                  <span class="absolute -right-2 top-2.5 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div class="relative">
+                  <input id="keyBlock3" class="w-full text-center bg-slate-950/90 border border-brand-cyan/70 text-brand-cyan font-bold py-2 rounded-lg text-sm tracking-widest shadow-glow-cyan-sm focus:outline-none focus:ring-1 focus:ring-brand-cyan uppercase" maxlength="4" type="text" value="99D4"/>
+                  <span class="absolute -right-2 top-2.5 text-slate-600 font-bold pointer-events-none">-</span>
+                </div>
+                <div>
+                  <input id="keyBlock4" class="w-full text-center bg-slate-950/90 border border-brand-cyan/70 text-brand-cyan font-bold py-2 rounded-lg text-sm tracking-widest shadow-glow-cyan-sm focus:outline-none focus:ring-1 focus:ring-brand-cyan uppercase" maxlength="4" type="text" value="E1B7"/>
+                </div>
+              </div>
+            </div>
+
+            <!-- VIEW 2: Alternative File Drop Target (Hidden by default) -->
+            <div id="viewFileDrop" class="hidden border-2 border-dashed border-slate-700/80 hover:border-brand-cyan/60 bg-slate-950/40 hover:bg-slate-900/30 rounded-xl p-5 text-center transition-all cursor-pointer group">
+              <input type="file" id="fileInputOffline" class="hidden" accept=".lic,.sig,.key"/>
+              <div class="flex flex-col items-center justify-center space-y-1.5">
+                <div class="w-10 h-10 rounded-full bg-slate-800/80 group-hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 group-hover:text-brand-cyan transition-colors">
+                  <span class="material-symbols-outlined text-xl">upload_file</span>
+                </div>
+                <div class="text-xs text-slate-300">
+                  <span id="fileDropLabel" class="font-medium text-white group-hover:text-brand-cyan transition-colors">Haz clic o arrastra tu certificado <code class="text-brand-cyan font-mono text-[11px]">.lic</code> / <code class="text-brand-cyan font-mono text-[11px]">.sig</code></span>
+                </div>
+                <p class="text-[11px] text-slate-500 font-mono">Compatible con firmas asimétricas Ed25519</p>
+              </div>
+            </div>
+
+            <!-- Primary Action Glowing Container & Status Badge -->
+            <div class="bg-slate-950/80 border border-slate-800/90 rounded-xl p-3.5 space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div id="validationPingDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+                  <span id="validationConsoleLog" class="text-xs font-mono text-slate-200">
+                    ● Enclave local listo: <span class="text-emerald-400 font-bold">0ms network latency (Air-Gapped Validated)</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-3 pt-1">
+                <button id="btnValidate" class="flex-1 py-2.5 rounded-lg bg-gradient-to-r from-brand-cyan to-cyan-400 hover:from-cyan-400 hover:to-brand-cyan text-slate-950 font-bold text-xs transition-all shadow-glow-cyan flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.98]">
+                  <span id="btnValidateIcon" class="material-symbols-outlined text-[18px]">verified</span>
+                  <span id="btnValidateText">Validate &amp; Activate Engine</span>
+                </button>
+                <button id="btnReset" class="px-3.5 py-2.5 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-900 text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer" title="Reiniciar demostración">
+                  Reset
+                </button>
+              </div>
+
+              <!-- Cryptographic Badge Details -->
+              <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800/70">
+                <span class="flex items-center text-cyan-400">
+                  <span class="material-symbols-outlined text-xs mr-1">encrypted</span>
+                  Curve25519 / SHA-512 Enclave Verified
+                </span>
+                <span class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  0 external network packets
+                </span>
+              </div>
+            </div>
+
+            <!-- Air-Gapped Trust Guarantee Callout -->
+            <div class="rounded-lg bg-slate-950/60 border border-slate-800/80 p-3 flex items-start space-x-2.5">
+              <span class="material-symbols-outlined text-brand-cyan text-sm mt-0.5">verified_user</span>
+              <div class="text-[11px] text-slate-400 leading-relaxed">
+                <strong class="text-slate-200">Enclave Criptográfico Embebido:</strong> La validación se ejecuta íntegramente mediante el binario local Rust compilado con AVX2. No se transfieren registros a endpoints de telemetría.
+              </div>
+            </div>
+
+            <!-- Bottom Transfer & Deactivation Action -->
+            <div class="flex items-center justify-between pt-1 text-xs">
+              <button id="btnDeactivateThisDevice" class="text-red-400/90 hover:text-red-300 hover:underline font-mono text-[11px] flex items-center gap-1 transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-sm">link_off</span>
+                Deactivate this device
+              </button>
+              <button id="btnTransferLicense" class="text-slate-400 hover:text-brand-cyan text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer">
+                <span>Transfer license to another workstation</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Dynamic Feature Unlock & Engine Status (~45%) -->
+        <div class="col-span-12 lg:col-span-5 space-y-4">
+          <div id="rightModuleCard" class="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-brand-surfaceCard to-brand-surfaceElevated p-5 space-y-4 shadow-glow-cyan-sm transition-all duration-500">
+            
+            <!-- Section Header & Hardware Fingerprint Chip -->
+            <div class="space-y-2 border-b border-slate-800/80 pb-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-cyan flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm text-brand-cyan">tune</span>
+                  Engine Capabilities &amp; Pro Modules Status
+                </h2>
+                <span id="pillProUnlocked" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-medium">
+                  PRO UNLOCKED
+                </span>
+              </div>
+
+              <!-- Hardware Chip -->
+              <div class="flex items-center justify-between bg-slate-950/80 border border-slate-800 px-2.5 py-1.5 rounded-lg text-[11px] font-mono">
+                <div class="flex items-center space-x-1.5 text-slate-300">
+                  <span class="material-symbols-outlined text-xs text-brand-cyan">fingerprint</span>
+                  <span>Machine GUID: <code class="text-brand-cyan font-bold" id="machineGuidCode">hw-98af-4e21-09bc</code></span>
+                  <button id="btnCopyGuid" class="hover:text-brand-cyan text-slate-500 ml-1 cursor-pointer" title="Copiar ID"><span class="material-symbols-outlined text-[13px]">content_copy</span></button>
+                </div>
+                <span id="badgeSeatsCount" class="text-[10px] text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20 font-medium">
+                  Paired to Seat 1 of 3
+                </span>
+              </div>
+            </div>
+
+            <!-- 4 Interactive Module Cards with Unlocked/Pro Switch States -->
+            <div class="space-y-2.5">
+              
+              <!-- Module 1: Multimodal Vision Indexing -->
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-cyan-500/40 hover:border-cyan-400/60 transition-all flex items-center justify-between module-row">
+                <div class="space-y-0.5">
+                  <div class="text-xs font-semibold text-white flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-brand-cyan">remove_red_eye</span>
+                    Multimodal Vision Indexing
+                  </div>
+                  <div class="text-[11px] text-slate-400">Moondream2 / Florence-2 (Local OCR &amp; Visual QA)</div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span id="statusMod1" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold">
+                    ENABLED
+                  </span>
+                  <button id="toggleMod1" class="w-8 h-4 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-sm cursor-pointer transition-all">
+                    <div class="w-3 h-3 rounded-full bg-white"></div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 2: Whisper Audio STT -->
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-cyan-500/40 hover:border-cyan-400/60 transition-all flex items-center justify-between module-row">
+                <div class="space-y-0.5">
+                  <div class="text-xs font-semibold text-white flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-brand-cyan">mic</span>
+                    Audio STT Transcription
+                  </div>
+                  <div class="text-[11px] text-slate-400">Whisper.cpp (Small/Medium GPU Auto-Tuning)</div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span id="statusMod2" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold">
+                    ENABLED
+                  </span>
+                  <button id="toggleMod2" class="w-8 h-4 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-sm cursor-pointer transition-all">
+                    <div class="w-3 h-3 rounded-full bg-white"></div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 3: Unlimited Watcher -->
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-cyan-500/40 hover:border-cyan-400/60 transition-all flex items-center justify-between module-row">
+                <div class="space-y-0.5">
+                  <div class="text-xs font-semibold text-white flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-brand-cyan">folder_special</span>
+                    Unlimited Folders &amp; External Drives
+                  </div>
+                  <div class="text-[11px] text-slate-400">Daemon de monitorización continua en Rust (<code class="text-brand-cyan font-mono text-[10px]">notify</code>)</div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span id="statusMod3" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold">
+                    UNLIMITED
+                  </span>
+                  <button id="toggleMod3" class="w-8 h-4 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-sm cursor-pointer transition-all">
+                    <div class="w-3 h-3 rounded-full bg-white"></div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 4: Obsidian Export -->
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-cyan-500/40 hover:border-cyan-400/60 transition-all flex items-center justify-between module-row">
+                <div class="space-y-0.5">
+                  <div class="text-xs font-semibold text-white flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-brand-cyan">auto_stories</span>
+                    Studio RAG &amp; Obsidian Exporter
+                  </div>
+                  <div class="text-[11px] text-slate-400">Exportación de vectores y chunks a Markdown / Obsidian Vault</div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span id="statusMod4" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold">
+                    ACTIVE
+                  </span>
+                  <button id="toggleMod4" class="w-8 h-4 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-sm cursor-pointer transition-all">
+                    <div class="w-3 h-3 rounded-full bg-white"></div>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Priority GPU acceleration indicator -->
+            <div class="rounded-lg bg-slate-950/80 border border-slate-800 p-2.5 flex items-center justify-between text-xs">
+              <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-emerald-400 text-sm">bolt</span>
+                <span class="font-medium text-slate-200">Aceleración por GPU:</span>
+                <span class="text-slate-400 font-mono text-[11px]">NVIDIA CUDA / Metal V2</span>
+              </div>
+              <span class="text-emerald-400 font-mono text-[11px] font-bold">120 emb/sec</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- WORKSTATION SEATS & DEVICE MANAGEMENT DRAWER (Bottom Section across full width) -->
+      <section class="rounded-xl border border-slate-800 bg-brand-surfaceCard/95 p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="material-symbols-outlined text-brand-cyan text-base">devices</span>
+            <h3 class="text-xs font-mono font-semibold text-white uppercase tracking-wider">
+              Workstation Seats Allocation (<span id="activeSeatsText">2 of 3 Active</span>)
+            </h3>
+            <span class="text-[10px] font-mono px-2 py-0.2 rounded-full bg-slate-800 text-slate-300">
+              Multi-OS Floating Seats
+            </span>
+          </div>
+          <div class="text-xs font-mono text-slate-400 flex items-center gap-1">
+            <span>Slot availability:</span>
+            <span id="slotsOpenText" class="text-brand-cyan font-bold">1 seat open</span>
+          </div>
+        </div>
+
+        <!-- Seats Table -->
+        <div class="border border-slate-800 rounded-lg overflow-hidden bg-slate-950/60 text-xs">
+          <div class="grid grid-cols-12 bg-slate-900/80 px-3.5 py-2 font-mono text-[11px] text-slate-400 uppercase border-b border-slate-800">
+            <div class="col-span-4">Equipo / Hardware Host</div>
+            <div class="col-span-5">Estado de Firma Criptográfica</div>
+            <div class="col-span-3 text-right">Acción de Asignación</div>
+          </div>
+
+          <!-- Row 1: This Device (Primary) -->
+          <div class="grid grid-cols-12 px-3.5 py-2.5 items-center border-b border-slate-800/70 hover:bg-slate-900/40 transition-colors">
+            <div class="col-span-4 flex items-center space-x-2">
+              <span class="material-symbols-outlined text-sm text-brand-cyan">laptop_windows</span>
+              <div>
+                <span class="font-medium text-white">This Device (Windows 11 Desktop - Primary)</span>
+                <div class="text-[10px] font-mono text-slate-400">AMD Ryzen 9 • HWID: 8F92-41AC</div>
+              </div>
+            </div>
+            <div class="col-span-5 flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="font-mono text-emerald-400 text-[11px]">Active • Hardware Enclave Validated Offline</span>
+            </div>
+            <div class="col-span-3 text-right font-mono">
+              <span class="text-[11px] text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                Primary Machine Binding
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 2: Secondary MacBook Pro M2 -->
+          <div id="rowSeat2" class="grid grid-cols-12 px-3.5 py-2.5 items-center border-b border-slate-800/70 hover:bg-slate-900/40 transition-colors">
+            <div class="col-span-4 flex items-center space-x-2">
+              <span class="material-symbols-outlined text-sm text-slate-300">laptop_mac</span>
+              <div>
+                <span class="font-medium text-white">MacBook Pro M2 (Secondary)</span>
+                <div class="text-[10px] font-mono text-slate-400">macOS Sonoma • HWID: D331-55AE</div>
+              </div>
+            </div>
+            <div class="col-span-5 flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="font-mono text-slate-300 text-[11px]">Active (Last sync 4h ago via Local Mesh)</span>
+            </div>
+            <div class="col-span-3 text-right">
+              <button id="btnRevokeSeat2" class="px-2.5 py-1 rounded bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[11px] font-mono transition-colors cursor-pointer">
+                Revoke / Unlink Device
+              </button>
+            </div>
+          </div>
+
+          <!-- Row 3: Available Empty Seat -->
+          <div id="rowSeat3" class="grid grid-cols-12 px-3.5 py-2.5 items-center hover:bg-slate-900/40 transition-colors">
+            <div class="col-span-4 flex items-center space-x-2 text-slate-400">
+              <span id="seat3Icon" class="material-symbols-outlined text-sm text-slate-500">add_circle_outline</span>
+              <span id="seat3Label" class="italic">Empty Seat (Available for Linux / macOS / Windows)</span>
+            </div>
+            <div class="col-span-5">
+              <span id="seat3Status" class="text-[11px] font-mono text-slate-500">Slot #3 Unassigned • Ready for offline bind</span>
+            </div>
+            <div class="col-span-3 text-right">
+              <button id="btnGenerateToken" class="px-2.5 py-1 rounded bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 text-[11px] font-mono transition-colors shadow-glow-cyan-sm cursor-pointer">
+                Generate Offline Token (.sig)
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER BAR: Security Assurance & Engine Action Controls -->
+    <footer class="flex-none px-6 py-3.5 border-t border-slate-800/90 bg-brand-darkBg flex items-center justify-between text-xs">
+      <!-- Left: Security Assurance -->
+      <div class="flex items-center space-x-2 text-slate-400">
+        <span class="material-symbols-outlined text-emerald-400 text-base">shield</span>
+        <span>
+          Air-gapped verification: OmniSearch stores no telemetry, tokens, or external pings. <strong class="text-slate-200">100% on-device cryptography.</strong>
+        </span>
+      </div>
+
+      <!-- Right: Action Controls -->
+      <div class="flex items-center space-x-3">
+        <button id="btnFooterCancel" class="px-4 py-2 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors font-medium text-xs cursor-pointer">
+          Cancel / Discard
+        </button>
+        <button id="btnFooterSave" class="px-5 py-2 rounded-lg bg-brand-cyan hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all shadow-glow-cyan flex items-center space-x-1.5 cursor-pointer">
+          <span>Save &amp; Apply Engine Changes</span>
+          <span class="text-[11px] opacity-80 font-mono">(Enter ↵)</span>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JAVASCRIPT: LOGICA INTERACTIVA COMPLETA -->
+  <script>
+    // Audio Chime Synth using Web Audio API
+    function playChime(type = 'success') {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        if (type === 'success') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+          osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15); // A5
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.36);
+        } else if (type === 'click') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.09);
+        }
+      } catch (e) {
+        // Fallback silently if audio context is blocked
+      }
+    }
+
+    // Toast Notification helper
+    let toastTimeout;
+    function showToast(title, message, icon = 'check_circle', isError = false) {
+      const toast = document.getElementById('toastNotification');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastMessage = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+      toastIcon.textContent = icon;
+      
+      if (isError) {
+        toast.className = 'fixed top-6 right-8 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center space-x-3 bg-red-950/95 border border-red-500/80 text-white px-4 py-3 rounded-xl shadow-lg';
+        toastTitle.className = 'font-bold text-red-400 font-mono';
+        toastIcon.className = 'material-symbols-outlined text-red-400 text-xl';
+      } else {
+        toast.className = 'fixed top-6 right-8 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center space-x-3 bg-slate-950/95 border border-brand-cyan/80 text-white px-4 py-3 rounded-xl shadow-glow-cyan';
+        toastTitle.className = 'font-bold text-brand-cyan font-mono';
+        toastIcon.className = 'material-symbols-outlined text-brand-cyan text-xl';
+      }
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-[-120%]', 'opacity-0');
+      }, 3500);
+    }
+
+    // Auto-tabbing across the 4 key blocks
+    const keyBlocks = [
+      document.getElementById('keyBlock1'),
+      document.getElementById('keyBlock2'),
+      document.getElementById('keyBlock3'),
+      document.getElementById('keyBlock4')
+    ];
+
+    keyBlocks.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        input.value = input.value.toUpperCase();
+        if (input.value.length === input.maxLength && index < keyBlocks.length - 1) {
+          keyBlocks[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+          keyBlocks[index - 1].focus();
+        }
+      });
+    });
+
+    // Paste Demo Key
+    document.getElementById('btnPasteDemo').addEventListener('click', () => {
+      playChime('click');
+      keyBlocks[0].value = 'OS-PRO';
+      keyBlocks[1].value = '8F2A';
+      keyBlocks[2].value = '99D4';
+      keyBlocks[3].value = 'E1B7';
+      showToast('Clave Insertada', 'Se ha copiado la clave demo Pro Lifetime');
+    });
+
+    // Tabs Toggle: Serial Key vs File Drop
+    const tabSerial = document.getElementById('tabSerial');
+    const tabOfflineFile = document.getElementById('tabOfflineFile');
+    const viewSerialForm = document.getElementById('viewSerialForm');
+    const viewFileDrop = document.getElementById('viewFileDrop');
+
+    tabSerial.addEventListener('click', () => {
+      playChime('click');
+      tabSerial.className = 'px-3 py-1 rounded bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 font-medium shadow-sm flex items-center gap-1 transition-all';
+      tabOfflineFile.className = 'px-2.5 py-1 text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1';
+      viewSerialForm.classList.remove('hidden');
+      viewFileDrop.classList.add('hidden');
+    });
+
+    tabOfflineFile.addEventListener('click', () => {
+      playChime('click');
+      tabOfflineFile.className = 'px-3 py-1 rounded bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 font-medium shadow-sm flex items-center gap-1 transition-all';
+      tabSerial.className = 'px-2.5 py-1 text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1';
+      viewSerialForm.classList.add('hidden');
+      viewFileDrop.classList.remove('hidden');
+    });
+
+    // File Drop Click Simulation
+    const fileInputOffline = document.getElementById('fileInputOffline');
+    const fileDropLabel = document.getElementById('fileDropLabel');
+    viewFileDrop.addEventListener('click', () => fileInputOffline.click());
+    fileInputOffline.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        fileDropLabel.innerHTML = `Certificado cargado: <strong class="text-brand-cyan font-mono">${file.name}</strong> (${(file.size/1024).toFixed(1)} KB)`;
+        playChime('click');
+        showToast('Certificado Seleccionado', file.name);
+      }
+    });
+
+    // Copy Machine GUID
+    document.getElementById('btnCopyGuid').addEventListener('click', () => {
+      const guid = document.getElementById('machineGuidCode').textContent;
+      navigator.clipboard.writeText(guid).then(() => {
+        playChime('click');
+        showToast('ID Copiado', `Hardware GUID ${guid} en el portapapeles`, 'content_copy');
+      });
+    });
+
+    // Toggle Air Gapped Switch
+    let airGappedOn = true;
+    const toggleAirGapped = document.getElementById('toggleAirGapped');
+    const airGappedText = document.getElementById('airGappedText');
+    const airGappedPill = document.getElementById('airGappedPill');
+    toggleAirGapped.addEventListener('click', () => {
+      airGappedOn = !airGappedOn;
+      playChime('click');
+      if (airGappedOn) {
+        airGappedText.innerHTML = '<span class="material-symbols-outlined text-[15px]">security</span> Air-Gapped Mode: ON';
+        airGappedPill.className = 'w-8 h-4 bg-emerald-600 rounded-full p-0.5 flex items-center justify-end shadow-inner transition-all';
+        showToast('Modo Air-Gapped Activado', 'Tráfico de red totalmente bloqueado para validaciones locales.');
+      } else {
+        airGappedText.innerHTML = '<span class="material-symbols-outlined text-[15px]">wifi</span> Online Sync: ON';
+        airGappedPill.className = 'w-8 h-4 bg-slate-700 rounded-full p-0.5 flex items-center justify-start shadow-inner transition-all';
+        showToast('Modo Online Habilitado', 'Permite sincronización Mesh local entre estaciones.');
+      }
+    });
+
+    // VALIDATION & ACTIVATION LOGIC (Simulation of local Rust Ed25519 check)
+    let isActivating = false;
+    let isProActive = true;
+    const btnValidate = document.getElementById('btnValidate');
+    const btnValidateText = document.getElementById('btnValidateText');
+    const btnValidateIcon = document.getElementById('btnValidateIcon');
+    const validationConsoleLog = document.getElementById('validationConsoleLog');
+    const rightModuleCard = document.getElementById('rightModuleCard');
+    const pillProUnlocked = document.getElementById('pillProUnlocked');
+    const step3Indicator = document.getElementById('step3Indicator');
+
+    btnValidate.addEventListener('click', () => {
+      if (isActivating) return;
+      isActivating = true;
+      playChime('click');
+
+      btnValidateText.textContent = 'Verificando firma local Ed25519...';
+      btnValidateIcon.textContent = 'progress_activity';
+      btnValidateIcon.classList.add('animate-spin');
+      btnValidate.className = 'flex-1 py-2.5 rounded-lg bg-slate-800 text-brand-cyan border border-brand-cyan/40 font-bold text-xs transition-all flex items-center justify-center space-x-2 cursor-wait';
+
+      validationConsoleLog.innerHTML = `<span class="text-brand-cyan">⏳ [RUST_CORE] Comprobando curva Curve25519 contra HWID: hw-98af-4e21...</span>`;
+
+      setTimeout(() => {
+        validationConsoleLog.innerHTML = `<span class="text-emerald-400">✔ Firma verificada localmente. 0 paquetes de red transmitidos.</span>`;
+        btnValidateText.textContent = '¡Licencia Pro Activada Exitosamente!';
+        btnValidateIcon.textContent = 'verified';
+        btnValidateIcon.classList.remove('animate-spin');
+        btnValidate.className = 'flex-1 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-glow-emerald-sm flex items-center justify-center space-x-2 cursor-pointer';
+
+        // Unlock effects
+        rightModuleCard.classList.add('animate-success-pop');
+        setTimeout(() => rightModuleCard.classList.remove('animate-success-pop'), 600);
+
+        pillProUnlocked.textContent = 'PRO LIFETIME VITALICIA';
+        pillProUnlocked.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold';
+        
+        step3Indicator.className = 'text-emerald-400 font-semibold flex items-center gap-1';
+        step3Indicator.innerHTML = '<span class="material-symbols-outlined text-[13px]">check_circle</span> 3. Engine Unlocked';
+
+        playChime('success');
+        showToast('¡Licencia Pro Activada!', 'Todos los módulos de visión y audio han quedado desbloqueados permanentemente.');
+        isActivating = false;
+        isProActive = true;
+      }, 1200);
+    });
+
+    // Reset Flow
+    document.getElementById('btnReset').addEventListener('click', () => {
+      playChime('click');
+      keyBlocks.forEach(k => k.value = '');
+      btnValidateText.textContent = 'Validate & Activate Engine';
+      btnValidateIcon.textContent = 'verified';
+      btnValidate.className = 'flex-1 py-2.5 rounded-lg bg-gradient-to-r from-brand-cyan to-cyan-400 hover:from-cyan-400 hover:to-brand-cyan text-slate-950 font-bold text-xs transition-all shadow-glow-cyan flex items-center justify-center space-x-2 cursor-pointer';
+      validationConsoleLog.innerHTML = `● Esperando ingreso de clave o token firmado...`;
+      showToast('Formulario Reiniciado', 'Ingresa una nueva clave o presiona "Pegar Clave Demo"');
+    });
+
+    // Interactive Toggles for the 4 modules
+    function setupModuleToggle(toggleId, statusId, activeText = 'ENABLED', inactiveText = 'DISABLED') {
+      const toggle = document.getElementById(toggleId);
+      const status = document.getElementById(statusId);
+      let enabled = true;
+
+      toggle.addEventListener('click', () => {
+        playChime('click');
+        enabled = !enabled;
+        if (enabled) {
+          toggle.className = 'w-8 h-4 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-sm cursor-pointer transition-all';
+          status.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold';
+          status.textContent = activeText;
+        } else {
+          toggle.className = 'w-8 h-4 bg-slate-700 rounded-full p-0.5 flex items-center justify-start shadow-sm cursor-pointer transition-all';
+          status.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-bold';
+          status.textContent = inactiveText;
+        }
+      });
+    }
+
+    setupModuleToggle('toggleMod1', 'statusMod1', 'ENABLED', 'PAUSED');
+    setupModuleToggle('toggleMod2', 'statusMod2', 'ENABLED', 'PAUSED');
+    setupModuleToggle('toggleMod3', 'statusMod3', 'UNLIMITED', '1 FOLDER LIMIT');
+    setupModuleToggle('toggleMod4', 'statusMod4', 'ACTIVE', 'INACTIVE');
+
+    // Revoke Seat 2 (MacBook Pro) Simulation
+    let seat2Revoked = false;
+    const btnRevokeSeat2 = document.getElementById('btnRevokeSeat2');
+    const rowSeat2 = document.getElementById('rowSeat2');
+    const activeSeatsText = document.getElementById('activeSeatsText');
+    const slotsOpenText = document.getElementById('slotsOpenText');
+    const badgeSeatsCount = document.getElementById('badgeSeatsCount');
+
+    btnRevokeSeat2.addEventListener('click', () => {
+      playChime('click');
+      if (!seat2Revoked) {
+        if (confirm('¿Deseas desvincular el MacBook Pro M2 para liberar este puesto flotante?')) {
+          seat2Revoked = true;
+          rowSeat2.innerHTML = `
+            <div class="col-span-4 flex items-center space-x-2 text-slate-500">
+              <span class="material-symbols-outlined text-sm">remove_circle_outline</span>
+              <span class="italic line-through">MacBook Pro M2 (Revocado)</span>
+            </div>
+            <div class="col-span-5">
+              <span class="text-[11px] font-mono text-amber-400">Puesto liberado • Clave invalidada en host</span>
+            </div>
+            <div class="col-span-3 text-right">
+              <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">Libre</span>
+            </div>
+          `;
+          activeSeatsText.textContent = '1 of 3 Active';
+          slotsOpenText.textContent = '2 seats open';
+          badgeSeatsCount.textContent = 'Paired to Seat 1 of 3 (2 Disponibles)';
+          showToast('Puesto Revocado', 'Se ha liberado 1 ranura para vincular otro equipo.');
+        }
+      }
+    });
+
+    // Generate Offline Token Action
+    document.getElementById('btnGenerateToken').addEventListener('click', () => {
+      playChime('success');
+      // Create and download synthetic signature file
+      const blob = new Blob(["OMNISEARCH_ED25519_SIGNATURE_SLOT3_VALIDATED_OFFLINE"], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "omnisearch_workstation_seat3.sig";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('Token Generado', 'Descargado archivo: omnisearch_workstation_seat3.sig', 'download_done');
+    });
+
+    // Footer Save and Close Actions
+    document.getElementById('btnFooterSave').addEventListener('click', () => {
+      playChime('success');
+      showToast('Cambios Guardados', 'Configuración del motor local actualizada.', 'save');
+    });
+
+    function closeDialogSimulation() {
+      playChime('click');
+      showToast('Cerrar Ventana', 'Regresando a la vista principal de búsqueda semántica...', 'exit_to_app');
+    }
+
+    document.getElementById('btnFooterCancel').addEventListener('click', closeDialogSimulation);
+    document.getElementById('btnHeaderClose').addEventListener('click', closeDialogSimulation);
+    document.getElementById('btnTrafficClose').addEventListener('click', closeDialogSimulation);
+    document.getElementById('btnDeactivateThisDevice').addEventListener('click', () => {
+      if (confirm('¿Seguro que deseas desvincular este equipo de la licencia Pro?')) {
+        playChime('click');
+        showToast('Equipo Desvinculado', 'OmniSearch volverá al modo Community Edition.', 'link_off', true);
+      }
+    });
+    document.getElementById('btnTransferLicense').addEventListener('click', () => {
+      showToast('Asistente de Transferencia', 'Generando enlace temporal de migración criptográfica...', 'swap_horiz');
+    });
+  </script>
+</body>
+</html>
