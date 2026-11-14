@@ -19,6 +19,24 @@
   --shadow-lg: 0 24px 60px rgba(2, 6, 23, 0.65);
 }
 
+/* Variables para Modo Claro */
+[data-theme="light"] {
+  --bg-primary: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-card: #F1F5F9;
+  --bg-card-hover: #E2E8F0;
+  --accent-blue: #0284C7;
+  --accent-blue-hover: #0369A1;
+  --accent-blue-soft: rgba(2, 132, 199, 0.1);
+  --accent-emerald: #059669;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border-subtle: rgba(15, 23, 42, 0.12);
+  --border-accent: rgba(2, 132, 199, 0.4);
+  --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
 *,
 *::before,
 *::after {
@@ -39,6 +57,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 code {
@@ -111,6 +130,11 @@ code {
   background: rgba(11, 17, 32, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease;
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(248, 250, 252, 0.86);
 }
 
 .navbar-inner {
@@ -180,17 +204,37 @@ code {
   gap: 10px;
 }
 
-.mobile-menu-btn {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
+/* Botón Selector de Tema (Sol / Luna) */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
   border: 1px solid var(--border-subtle);
   background: var(--bg-surface);
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent-blue);
+  border-color: var(--border-accent);
+  background: var(--accent-blue-soft);
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+  display: block;
 }
 
 /* Buttons */
@@ -222,6 +266,13 @@ code {
 .btn-primary {
   background: var(--accent-blue);
   color: #06101F;
+}
+
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .os-tab.active,
+[data-theme="light"] .pill-new,
+[data-theme="light"] .btn-scan:hover {
+  color: #FFFFFF;
 }
 
 .btn-primary:hover {
@@ -261,7 +312,7 @@ code {
 
 .btn-ghost:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(128, 128, 128, 0.1);
 }
 
 /* Hero & Download Portal */
@@ -516,6 +567,10 @@ code {
   flex-wrap: wrap;
 }
 
+[data-theme="light"] .window-topbar {
+  background: #E2E8F0;
+}
+
 .window-dots {
   display: flex;
   gap: 7px;
@@ -697,7 +752,7 @@ code {
 .result-card:hover,
 .result-card.selected {
   border-color: var(--accent-blue);
-  background: rgba(56, 189, 248, 0.08);
+  background: var(--accent-blue-soft);
 }
 
 .result-top {
@@ -732,6 +787,10 @@ code {
 .inspector-panel {
   padding: 22px;
   background: rgba(11, 17, 32, 0.55);
+}
+
+[data-theme="light"] .inspector-panel {
+  background: #F1F5F9;
 }
 
 .inspector-tag {

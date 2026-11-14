@@ -21,19 +21,19 @@
     // Configuración por Sistema Operativo
     const OS_CONFIG = {
         windows: {
-            description: 'Instalador nativo MSI/EXE compilado con Tauri v2 y Rust (~50 MB RAM en reposo).',
+            description: 'Instalador nativo EXE/MSI compilado con Tauri v2 y Rust (~50 MB RAM en reposo).',
             primaryLabel: 'Descargar para Windows (x64)',
             secondaryLabel: 'Descargar para ARM64',
             requirements: 'Windows 10 / 11 (64 bits) · 8 GB RAM · Sin GPU dedicada requerida',
             shellName: 'Windows PowerShell',
             cliCommand: 'irm https://omnisearch.local/install.ps1 | iex',
-            primaryFile: 'OmniSearch.Desktop_0.4.2_x64-setup.exe',
-            secondaryFile: 'OmniSearch.Desktop_0.4.2_x64_en-US.msi',
-            primaryUrl: 'https://github.com/opaez05/omnisearch-desktop/releases/download/v0.4.2/OmniSearch.Desktop_0.4.2_x64-setup.exe',
-            secondaryUrl: 'https://github.com/opaez05/omnisearch-desktop/releases/download/v0.4.2/OmniSearch.Desktop_0.4.2_x64_en-US.msi',
+            primaryFile: 'OmniSearch-Desktop_0.4.2_x64-setup.exe',
+            secondaryFile: 'OmniSearch-Desktop_0.4.2_arm64-setup.exe',
+            primaryUrl: '',   // Coloca aquí la URL de tu GitHub Release (.exe x64)
+            secondaryUrl: '', // Coloca aquí la URL de tu GitHub Release (.exe ARM64)
             sha256: '4f8a92c1e7b03d94a61c8e20f5d12b78a3e904c1f76d82b5a90e1c4d3b2f8190',
             steps: [
-                'Ejecuta el instalador .msi descargado.',
+                'Ejecuta el instalador .exe descargado.',
                 'Selecciona las carpetas locales que deseas indexar de forma privada.',
                 'Espera la descarga automática única de los modelos cuantizados (BGE-Small y Moondream2).'
             ]
@@ -45,8 +45,10 @@
             requirements: 'macOS 12 Monterey o posterior · 8 GB RAM unificada',
             shellName: 'macOS Terminal (zsh / bash)',
             cliCommand: 'curl -fsSL https://omnisearch.local/install.sh | sh',
-            primaryFile: 'OmniSearch-Desktop_0.4.2_aarch64.dmg (39.5 MB)',
-            secondaryFile: 'OmniSearch-Desktop_0.4.2_x64.dmg (43.1 MB)',
+            primaryFile: 'OmniSearch-Desktop_0.4.2_aarch64.dmg',
+            secondaryFile: 'OmniSearch-Desktop_0.4.2_x64.dmg',
+            primaryUrl: '',   // Coloca aquí la URL de tu GitHub Release (.dmg Apple Silicon)
+            secondaryUrl: '', // Coloca aquí la URL de tu GitHub Release (.dmg Intel)
             sha256: '8b2e74d91a05c38f62e4b19d0a7c5e31f8492a6d0c1e7b35a492f81c6d0e3a72',
             steps: [
                 'Abre la imagen .dmg y arrastra OmniSearch Desktop a tu carpeta Aplicaciones.',
@@ -61,8 +63,10 @@
             requirements: 'Ubuntu 22.04+, Fedora 38+ o Arch Linux · WebKitGTK 4.1 · 8 GB RAM',
             shellName: 'Linux Bash',
             cliCommand: 'curl -fsSL https://omnisearch.local/install.sh | bash',
-            primaryFile: 'OmniSearch-Desktop_0.4.2_amd64.AppImage (45.0 MB)',
-            secondaryFile: 'OmniSearch-Desktop_0.4.2_amd64.deb (38.7 MB)',
+            primaryFile: 'OmniSearch-Desktop_0.4.2_amd64.AppImage',
+            secondaryFile: 'OmniSearch-Desktop_0.4.2_amd64.deb',
+            primaryUrl: '',   // Coloca aquí la URL de tu GitHub Release (.AppImage)
+            secondaryUrl: '', // Coloca aquí la URL de tu GitHub Release (.deb)
             sha256: '2d91c6e40f83a71b59e2d4c80a1f6b37e9504c2a8d1f73b6e04a92c5d8f1b634',
             steps: [
                 'Asigna permisos de ejecución: chmod +x OmniSearch-Desktop_0.4.2_amd64.AppImage',
@@ -72,6 +76,7 @@
         }
     };
 
+    // Dataset simulado para la demostración interactiva
     const MOCK_FILES = [
         {
             id: 'contrato-pdf',
@@ -122,8 +127,10 @@
     let isScanning = false;
 
     // Referencias DOM
-    const osTabs = Array.from(document.querySelectorAll('.os-tab'));
-    const downloadPanel = document.getElementById('download-panel');
+    const btnThemeToggle = document.getElementById('btn-theme-toggle');
+    const THEME_STORAGE_KEY = 'omnisearch-landing-theme';
+
+    const osTabs = document.querySelectorAll('.os-tab');
     const osDesc = document.getElementById('os-description');
     const labelPrimary = document.getElementById('label-primary');
     const labelSecondary = document.getElementById('label-secondary');
@@ -156,6 +163,25 @@
     const scanContainer = document.getElementById('scan-progress-container');
     const scanFill = document.getElementById('scan-progress-fill');
 
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }
+
+    function initTheme() {
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme('dark');
+        }
+    }
+
+    // Detectar SO inicial del visitante
     function detectOS() {
         const platform = (navigator.userAgent || '').toLowerCase();
         if (platform.includes('mac')) return 'macos';
@@ -196,7 +222,6 @@
         modalSha.textContent = cfg.sha256;
         modalSteps.innerHTML = cfg.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join('');
         modal.hidden = false;
-        btnModalDone.focus();
 
         if (downloadUrl) {
             const link = document.createElement('a');
@@ -205,13 +230,6 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
-    }
-
-    function closeDownloadModal() {
-        modal.hidden = true;
-        if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
-            lastFocusedTrigger.focus();
         }
     }
 
@@ -287,25 +305,15 @@
         renderInspector(activeFile);
     }
 
-    // Event Delegation en la lista de resultados (evita re-adjuntar listeners en cada render)
-    resultsList.addEventListener('click', (e) => {
-        const card = e.target.closest('.result-card');
-        if (card && card.dataset.id) {
-            updateSelectedCardUI(card.dataset.id);
-        }
-    });
+    // Event Listeners
+    if (btnThemeToggle) {
+        btnThemeToggle.addEventListener('click', () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            applyTheme(isLight ? 'dark' : 'light');
+        });
+    }
 
-    resultsList.addEventListener('keydown', (e) => {
-        const card = e.target.closest('.result-card');
-        if (!card) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            updateSelectedCardUI(card.dataset.id);
-        }
-    });
-
-    // Navegación por clic y teclado (ArrowLeft/ArrowRight) en las pestañas de SO
-    osTabs.forEach((tab, idx) => {
+    osTabs.forEach((tab) => {
         tab.addEventListener('click', () => updateOSView(tab.dataset.os));
         tab.addEventListener('keydown', (e) => {
             let targetIdx = null;
@@ -405,6 +413,7 @@
     });
 
     // Inicialización
+    initTheme();
     updateOSView(detectOS());
     filterAndRenderResults(searchInput.value);
 })();
