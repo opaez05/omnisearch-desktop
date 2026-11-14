@@ -18,3 +18,9 @@ export interface SearchResult {
   relevant_snippet: string;
   metadata: Record<string, string>;
 }
+
+export interface AppConfig {
+  setup_completed: boolean;
+  autostart: boolean;
+  indexed_folder: string;
+}

@@ -14,6 +14,13 @@ pub trait ContentExtractorPort: Send + Sync {
 #[allow(async_fn_in_trait)]
 pub trait AiInferencePort: Send + Sync {
     async fn generate_embeddings(&self, text: &str) -> Result<Vec<f32>>;
+    async fn generate_embeddings_batch(&self, texts: &[String]) -> Result<Vec<Vec<f32>>> {
+        let mut results = Vec::with_capacity(texts.len());
+        for text in texts {
+            results.push(self.generate_embeddings(text).await?);
+        }
+        Ok(results)
+    }
     async fn generate_description(&self, text: &str) -> Result<String>;
     async fn generate_text(&self, prompt: &str) -> Result<String>;
 }
