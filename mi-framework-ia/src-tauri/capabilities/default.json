@@ -1,9 +1,10 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "enables the default permissions",
+  "description": "Permisos por defecto para la ventana principal (main) y el popup de bandeja (tray-popup)",
   "windows": [
-    "main"
+    "main",
+    "tray-popup"
   ],
   "permissions": [
     "core:default"

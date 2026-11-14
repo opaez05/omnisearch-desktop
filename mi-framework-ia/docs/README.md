@@ -28,6 +28,7 @@ Documentos que definen **cómo** se construye.
 |-----------|-------------|
 | [architecture.md](architecture/architecture.md) | Arquitectura Hexagonal, patrones de diseño, convenciones de Rust y TypeScript |
 | [database_architecture.md](architecture/database_architecture.md) | Arquitectura de Base de Datos NoSQL: comparativa (MongoDB+Redis vs. Stack Embebido), esquemas y flujos |
+| [security_hardening.md](architecture/security_hardening.md) | Auditoría de seguridad (OWASP/CWE) y controles de endurecimiento aplicados en Rust, Python y Tauri |
 | [manifest_schema.md](architecture/manifest_schema.md) | Esquema de manifiestos del motor de Agentes y Skills |
 | [skills_spec.md](architecture/skills_spec.md) | Especificación del sistema de Skills del framework |
 | [diagrama_er_nosql.png](architecture/diagrama_er_nosql.png) | Diagrama ER NoSQL en PNG con MongoDB, Redis y LanceDB |

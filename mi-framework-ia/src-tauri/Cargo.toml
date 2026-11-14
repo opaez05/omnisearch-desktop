@@ -1,14 +1,12 @@
 [package]
 name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
+version = "0.4.2"
+description = "OmniSearch Desktop — Explorador Semántico Local con Bandeja del Sistema"
+authors = ["OmniSearch Team"]
+license = "MIT"
 repository = ""
 edition = "2021"
 rust-version = "1.77.2"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
 name = "app_lib"
@@ -21,12 +19,11 @@ tauri-build = { version = "2.6.3", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
-tauri = { version = "2.11.3", features = [] }
+# En Tauri v2 el soporte de System Tray está integrado en el crate principal activando el feature "tray-icon"
+tauri = { version = "2.11.3", features = ["tray-icon"] }
 tauri-plugin-log = "2"
 thiserror = "1.0"
 dirs = "5.0"
 sha2 = "0.10"
 reqwest = { version = "0.12", features = ["json"] }
 pdf-extract = "0.12.0"
-
-

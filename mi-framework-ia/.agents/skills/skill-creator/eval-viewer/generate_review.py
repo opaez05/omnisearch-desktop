@@ -276,7 +276,12 @@ def generate_html(
     if benchmark:
         embedded["benchmark"] = benchmark
 
-    data_json = json.dumps(embedded)
+    data_json = (
+        json.dumps(embedded)
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+        .replace("&", "\\u0026")
+    )
 
     return template.replace("/*__EMBEDDED_DATA__*/", f"const EMBEDDED_DATA = {data_json};")
 
@@ -360,17 +365,38 @@ class ReviewHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         if self.path == "/api/feedback":
-            length = int(self.headers.get("Content-Length", 0))
+            max_body_bytes = 5 * 1024 * 1024  # 5 MB
+            origin = self.headers.get("Origin", "")
+            host = self.headers.get("Host", "")
+            allowed_origins = {
+                f"http://{host}",
+                f"http://localhost:{self.server.server_port}",
+                f"http://127.0.0.1:{self.server.server_port}",
+            }
+            if origin and origin not in allowed_origins:
+                self.send_error(403, "Forbidden Origin")
+                return
+
+            try:
+                length = int(self.headers.get("Content-Length", 0))
+            except ValueError:
+                self.send_error(400, "Invalid Content-Length")
+                return
+
+            if length <= 0 or length > max_body_bytes:
+                self.send_error(413, "Payload Too Large")
+                return
+
             body = self.rfile.read(length)
             try:
                 data = json.loads(body)
                 if not isinstance(data, dict) or "reviews" not in data:
                     raise ValueError("Expected JSON object with 'reviews' key")
-                self.feedback_path.write_text(json.dumps(data, indent=2) + "\n")
+                self.feedback_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
                 resp = b'{"ok":true}'
                 self.send_response(200)
             except (json.JSONDecodeError, OSError, ValueError) as e:
-                resp = json.dumps({"error": str(e)}).encode()
+                resp = json.dumps({"error": str(e)}).encode("utf-8")
                 self.send_response(500)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(resp)))
