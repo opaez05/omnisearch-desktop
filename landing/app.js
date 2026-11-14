@@ -27,10 +27,10 @@
             requirements: 'Windows 10 / 11 (64 bits) · 8 GB RAM · Sin GPU dedicada requerida',
             shellName: 'Windows PowerShell',
             cliCommand: 'irm https://omnisearch.local/install.ps1 | iex',
-            primaryFile: 'OmniSearch-Desktop_0.4.2_x64-setup.exe',
-            secondaryFile: 'OmniSearch-Desktop_0.4.2_arm64-setup.exe',
-            primaryUrl: '',   // Coloca aquí la URL de tu GitHub Release (.exe x64)
-            secondaryUrl: '', // Coloca aquí la URL de tu GitHub Release (.exe ARM64)
+            primaryFile: 'OmniSearch.Desktop_0.4.2_x64-setup.exe',
+            secondaryFile: 'OmniSearch.Desktop_0.4.2_x64_en-US.msi',
+            primaryUrl: 'https://github.com/opaez05/omnisearch-desktop/releases/download/v0.4.2/OmniSearch.Desktop_0.4.2_x64-setup.exe',
+            secondaryUrl: 'https://github.com/opaez05/omnisearch-desktop/releases/download/v0.4.2/OmniSearch.Desktop_0.4.2_x64_en-US.msi',
             sha256: '4f8a92c1e7b03d94a61c8e20f5d12b78a3e904c1f76d82b5a90e1c4d3b2f8190',
             steps: [
                 'Ejecuta el instalador .exe descargado.',
@@ -222,6 +222,7 @@
         modalSha.textContent = cfg.sha256;
         modalSteps.innerHTML = cfg.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join('');
         modal.hidden = false;
+        btnModalDone.focus();
 
         if (downloadUrl) {
             const link = document.createElement('a');
@@ -230,6 +231,13 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+    }
+
+    function closeDownloadModal() {
+        modal.hidden = true;
+        if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
+            lastFocusedTrigger.focus();
         }
     }
 
