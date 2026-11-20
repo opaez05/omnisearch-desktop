@@ -8,6 +8,15 @@ El **Explorador Semántico Local** es una aplicación de escritorio revolucionar
 
 ---
 
+## 🌐 Despliegue en Vivo
+
+La landing page y presentación web de **OmniSearch Desktop** se encuentra desplegada en Vercel:
+
+* 🔗 **URL de producción:** [https://omnisearch-desktop-landing-8m5teezht-opaez-05.vercel.app/](https://omnisearch-desktop-landing-8m5teezht-opaez-05.vercel.app/)
+* 📁 **Código fuente de la landing:** [`landing/`](landing/)
+
+---
+
 ## ✨ Características Principales
 
 * 🔒 **100% Privado (Zero Telemetry):** Tus archivos nunca abandonan tu máquina. Todo el procesamiento se hace localmente o en tu red privada de confianza.
