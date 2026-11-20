@@ -131,6 +131,7 @@
     const THEME_STORAGE_KEY = 'omnisearch-landing-theme';
 
     const osTabs = document.querySelectorAll('.os-tab');
+    const downloadPanel = document.getElementById('download-panel');
     const osDesc = document.getElementById('os-description');
     const labelPrimary = document.getElementById('label-primary');
     const labelSecondary = document.getElementById('label-secondary');
@@ -321,7 +322,7 @@
         });
     }
 
-    osTabs.forEach((tab) => {
+    osTabs.forEach((tab, idx) => {
         tab.addEventListener('click', () => updateOSView(tab.dataset.os));
         tab.addEventListener('keydown', (e) => {
             let targetIdx = null;
@@ -335,6 +336,23 @@
                 updateOSView(osTabs[targetIdx].dataset.os, true);
             }
         });
+    });
+
+    resultsList.addEventListener('click', (e) => {
+        const card = e.target.closest('.result-card');
+        if (card && card.dataset.id) {
+            updateSelectedCardUI(card.dataset.id);
+        }
+    });
+
+    resultsList.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const card = e.target.closest('.result-card');
+            if (card && card.dataset.id) {
+                e.preventDefault();
+                updateSelectedCardUI(card.dataset.id);
+            }
+        }
     });
 
     // Menú móvil accesible
